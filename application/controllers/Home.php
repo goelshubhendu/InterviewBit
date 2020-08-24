@@ -12,4 +12,12 @@ class Home extends CI_Controller {
 		$this->load->view('home');
 		$this->load->view('footer');
 	}
+	public function new()
+	{
+
+		header('Access-Control-Allow-Origin: *');
+		//$this->db->query("insert into users values(5,'smsms','ssss','sss')");
+		$temp="API IS EXPOSED";
+		echo $temp;
+	}
 }
