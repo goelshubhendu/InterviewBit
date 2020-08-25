@@ -17,6 +17,7 @@
 $(document).ready(function(){
 		
 	var cnt=2;
+	var cls="#flashdata";
 	for (var i = 3 ;i <=10; i++) {
 		var temp='#member'+i;
 		$(temp).hide();
@@ -25,6 +26,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		if(cnt==10){
 			var data='<div class="alert alert-danger"><h3>No more than 10 members can attend a meeting.</h3></div>';
+			$("#flashdata").fadeIn(100);
 			$("#flashdata").html(data);
 			$("#flashdata").fadeOut(5000);
 		}
@@ -41,14 +43,18 @@ $(document).ready(function(){
 		//console.log(cnt);
 	});
 	$('.create_event').click(function(e){
-		var cls="#flashdata";
+		
 		e.preventDefault();
 		
 		var title=$("#title").val();
 		var temp=title.replace(/\s/g, "");
 
 		if(temp.length <=3){
+			$(cls).fadeIn(100);
+			
 			$(cls).html('<div class="alert alert-danger"><h2>Enter at least 3 characters in title</h2></div>');
+			$(cls).fadeOut(5000);
+			
 		}
 
 		else{
@@ -59,7 +65,7 @@ $(document).ready(function(){
 			arr= Array.from(new Set(arr));
 			var tot=arr.length;
 			if(tot>=2){
-						
+
 				var sd=$("#start_date").val();
 				var st=$("#start_time").val();
 				var ed=$("#end_date").val();
@@ -69,22 +75,32 @@ $(document).ready(function(){
 					method : "POST",
 					data : { title:title ,  members:arr , tot:tot , sd: sd, ed:ed,st:st , et:et},
 					success:function(data){
-						if(data=='YES'){
-							$(cls).html('<div class="alert alert-success"><h3>Interview Scheduled Successfully</h3></div>');
-							$(cls).fadeOut(5000);
-						}
-						else{
-							$(cls).html(data);
-						}
-						console.log(data);
+						$(cls).fadeIn(100);
+						$(cls).html(data);
+						$(cls).fadeOut(5000);
 					}
 				});	
 			}
 			else{
+				$(cls).fadeIn(100);
 				$(cls).html('<div class="alert alert-danger"><h2>Select atleast 2 different members.</h2></div>');		
+				$(cls).fadeOut(5000);
+			
 			}
 		}
 		
+	});
+	$('.delete_interview').click(function(){
+		var iid=$(this).data('iid');
+		var card="#interview"+iid;
+		$.ajax({
+			url : "<?php echo site_url('home/delete') ?>",
+				method : "POST",
+				data : { iid:iid},
+				success:function(){
+					$(card).fadeOut(1500);
+				}
+		});
 	});
 });
 </script>

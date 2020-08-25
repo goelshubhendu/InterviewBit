@@ -1,11 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="container tc">
+<div class="container ">
+<div class="justify-content-center tc">
 <h2>Interview Scheduler</h2>
+
+<div>
+<a href="<?php echo site_url('home/all') ?>" class="btn btn-success"><h3>View All Interviews</h3></a>
 </div>
-<div class="row">
-<div class="container col-sm-6">
+<div class="container  tc" style="max-width:50%;">
 <h3> Schedule a New Interview</h3>
 <?php echo form_open_multipart('home/new'); ?>
 <div class="form-group">
@@ -87,16 +90,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div >
 </div>	
 </div>
+<div class="form-group">
 <button class="btn btn-success" id="add_member">Add Member</button>
-
+</div>
 
 <input type="submit" value="GO" class="btn btn-success form-control create_event" />
 </form>
 </div>
-<div class="container col-sm-6">
-<h3> View All Scheduled Interviews</h3>
 </div>
 
 </div>
-</body>
-</html>
