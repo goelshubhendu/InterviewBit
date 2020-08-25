@@ -39,14 +39,14 @@ class Home extends CI_Controller {
 			}
 
 			if(sizeof($temp)>=2){
-					echo $this->users->new_interview($temp,$sd,$ed);
+				echo $this->users->new_interview($temp,$sd,$ed,$title);
 			}
 			else{
 				echo '<div class="alert alert-danger"><h2>Select atleast 2 distinct users</h2></div>';
 			}
 		}
 		else{
-			echo '<div class="alert alert-danger"><h2>start Date-Time must be greater than current Date-Time'."\r\t\n".'and less than end Date-Time'."\n\r\tcurrent Date-Time is ".Date("yy-m-d H:i:s").'</h2></div>';
+			echo '<div class="alert alert-danger"><h2>start Date-Time must be greater than current Date-Time'."<br>".'and less than end Date-Time'."<br>"."current Date-Time is ".Date("yy-m-d H:i:s").'</h2></div>';
 		}
 	}
 }
