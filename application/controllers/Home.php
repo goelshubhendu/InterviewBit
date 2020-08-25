@@ -21,6 +21,19 @@ class Home extends CI_Controller {
 		$this->load->view('interviews',$a);
 		$this->load->view('footer');
 	}
+	public function edit($iid=0){
+		$a['interview']=$this->interviews->get($iid);
+		$a['members']=$this->interviews->members($iid);
+		$a['start_date']=substr($a['interview'][0]['start_time'],0,10);
+		$a['start_time']=substr($a['interview'][0]['start_time'],11);
+		$a['end_date']=substr($a['interview'][0]['end_time'],0,10);
+		$a['end_time']=substr($a['interview'][0]['end_time'],11);
+		$a['users']=$this->users->get();
+		
+		$this->load->view('header');
+		$this->load->view('edit',$a);
+		$this->load->view('footer');	
+	}
 	public function new()
 	{
 
@@ -33,9 +46,15 @@ class Home extends CI_Controller {
 		$ed=$this->input->post('ed');
 		$ed=$ed." ".$this->input->post('et');
 		$date=Date("yy-m-d H:i:s");
+		$type=$this->input->post('type');
+		$iid=0;
+		if($type==1){
+			$iid=$this->input->post('iid');
+		}
 		if($sd < $ed && $sd >$date){
 			
 			//Again check if there are atleast 2 distinct Users
+			// If we do not want to give web interface
 			$temp=array();
 			$cnt=0;
 			for($i=0;$i<$tot;$i++)
@@ -46,7 +65,11 @@ class Home extends CI_Controller {
 			}
 
 			if(sizeof($temp)>=2){
-				echo $this->interviews->new_interview($temp,$sd,$ed,$title);
+				if($type==0)
+					echo $this->interviews->new_interview($temp,$sd,$ed,$title);
+				else{
+					echo $this->interviews->update($iid,$temp,$sd,$ed,$title);
+				}
 			}
 			else{
 				echo '<div class="alert alert-danger"><h2>Select atleast 2 distinct users</h2></div>';

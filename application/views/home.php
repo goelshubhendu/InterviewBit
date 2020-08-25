@@ -94,7 +94,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <button class="btn btn-success" id="add_member">Add Member</button>
 </div>
 
-<input type="submit" value="GO" class="btn btn-success form-control create_event" />
+<input type="submit" value="GO" class="btn btn-success form-control create_event"  data-type="0"/>
 </form>
 </div>
 </div>

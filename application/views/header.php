@@ -31,7 +31,5 @@
         }
 
 </style>
-<div id="flashdata">
 
-</div>
 <body>

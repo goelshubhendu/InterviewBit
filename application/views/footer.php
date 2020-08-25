@@ -1,3 +1,6 @@
+<div id="flashdata">
+
+</div>
 </body>
 </html>
 
@@ -15,10 +18,20 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+		var cnt=0;
+		<?php 
+		if(isset($members)){	
+		 ?>
+		 	cnt=<?php echo sizeof($members); ?>;	 
+		<?php  }
+		else{
+			?>  cnt=2;
+			
+		<?php }
+		?>
 		
-	var cnt=2;
 	var cls="#flashdata";
-	for (var i = 3 ;i <=10; i++) {
+	for (var i = (cnt+1) ;i <=10; i++) {
 		var temp='#member'+i;
 		$(temp).hide();
 	}
@@ -32,15 +45,21 @@ $(document).ready(function(){
 		}
 		else{
 			cnt++;
-			var temp='#member'+cnt;
-			$(temp).show();
-		}		
+			for(var i=1; i<=10;i++){
+				if($("#member"+i).is(":hidden")){
+
+					$("#member"+i).show();
+					break;
+				}
+			}
+		}
+		
 	});
 	$(".remove_member").click(function(e){	
 		e.preventDefault();
 		$(this).parent('div').hide();	
 		cnt--;
-		//console.log(cnt);
+		
 	});
 	$('.create_event').click(function(e){
 		
@@ -48,8 +67,12 @@ $(document).ready(function(){
 		
 		var title=$("#title").val();
 		var temp=title.replace(/\s/g, "");
-
-		if(temp.length <=3){
+		var type=$(this).data('type');
+		var iid=0;
+		if(type==1){
+			iid=$(this).data('iid');
+		}
+		if(temp.length <3){
 			$(cls).fadeIn(100);
 			
 			$(cls).html('<div class="alert alert-danger"><h2>Enter at least 3 characters in title</h2></div>');
@@ -59,7 +82,8 @@ $(document).ready(function(){
 
 		else{
 			var arr=[];
-			for (var i = 1; i <= cnt; i++) {
+			for (var i = 1; i <= 10; i++) {
+				if($("#mem"+i).is(":visible"))
 				arr.push($("#mem"+i).val());
 			}
 			arr= Array.from(new Set(arr));
@@ -73,7 +97,7 @@ $(document).ready(function(){
 				$.ajax({
 					url : "<?php echo site_url('home/new') ?>",
 					method : "POST",
-					data : { title:title ,  members:arr , tot:tot , sd: sd, ed:ed,st:st , et:et},
+					data : { title:title ,  members:arr , tot:tot , sd: sd, ed:ed,st:st , et:et , type:type , iid:iid},
 					success:function(data){
 						$(cls).fadeIn(100);
 						$(cls).html(data);
