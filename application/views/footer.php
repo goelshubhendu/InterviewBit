@@ -41,13 +41,16 @@ $(document).ready(function(){
 		//console.log(cnt);
 	});
 	$('.create_event').click(function(e){
+		var cls="#flashdata";
 		e.preventDefault();
+		
 		var title=$("#title").val();
 		var temp=title.replace(/\s/g, "");
-		var cls="#flashdata";
+
 		if(temp.length <=3){
 			$(cls).html('<div class="alert alert-danger"><h2>Enter at least 3 characters in title</h2></div>');
 		}
+
 		else{
 			var arr=[];
 			for (var i = 1; i <= cnt; i++) {
@@ -56,10 +59,15 @@ $(document).ready(function(){
 			arr= Array.from(new Set(arr));
 			var tot=arr.length;
 			if(tot>=2){
+						
+				var sd=$("#start_date").val();
+				var st=$("#start_time").val();
+				var ed=$("#end_date").val();
+				var et=$("#end_time").val();
 				$.ajax({
 					url : "<?php echo site_url('home/new') ?>",
 					method : "POST",
-					data : { title:title ,  members:arr , tot:tot},
+					data : { title:title ,  members:arr , tot:tot , sd: sd, ed:ed,st:st , et:et},
 					success:function(data){
 						if(data=='YES'){
 							$(cls).html('<div class="alert alert-success"><h3>Interview Scheduled Successfully</h3></div>');

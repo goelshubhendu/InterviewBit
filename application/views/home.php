@@ -9,9 +9,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <h3> Schedule a New Interview</h3>
 <?php echo form_open_multipart('home/new'); ?>
 <div class="form-group">
+	<h5>Title</h5>
 	<input placeholder="Enter Title" type="text" id="title" class="form-control" required minlength="3" maxlength="40" name="title" />
 </div>
+<div id="timings">
+<div class="container">
+<div class="row">
+	<div class="col-sm-6">
+	<div class="form-group">
+	<h5>Start Date</h5>
+	<input class="form-control" type="date" name="start_date" id="start_date" required >
+	</div>
+	</div>
+	<div class="col-sm-6">
+	<div class="form-group">
+	<h5>Start Time</h5>
+	<input class="form-control" type="time" name="start_time" id="start_time" required value="00:00:00">
+	</div>
+	</div>
+	</div>
+</div>
+
+<div class="container">
+<div class="row">
+	<div class="col-sm-6">
+	<div class="form-group">
+	<h5>End Date</h5>
+	<input class="form-control" type="date" name="end_date" id="end_date" required >
+	</div>
+	</div>
+	<div class="col-sm-6">
+	<div class="form-group">
+	<h5>End Time</h5>
+	<input class="form-control" type="time" name="end_time" id="end_time" required value="00:00:00">
+	</div>
+	</div>
+	</div>
+</div>
+</div>
 <div id="members">
+<h4>Participants</h4>	
 <div class="form-group">
 <select id="mem1" class="form-control" name="member1">
 <?php foreach ($users as $key => $value) {?>
