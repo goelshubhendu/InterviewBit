@@ -81,6 +81,8 @@ class Home extends CI_Controller {
 	}
 	public function email(){
 		$email=$this->input->post('email');
+		$sd=$this->input->post('sd');
+		$ed=$this->input->post('ed');
 		$this->email->from('interviewschedulerinterview@gmail.com', 'Interview Scheduler');
         $this->email->to('goelshubhendu@gmail.com');
         $this->email->cc($email);

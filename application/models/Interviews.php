@@ -37,7 +37,7 @@ class Interviews extends CI_Model {
 		}
 		$res="";
 		if($avail==true){
-			
+			$email=array();
 			$data=array('title'=>$title,'start_time'=>$sd,'end_time'=>$ed);
 			$this->db->where('iid',$iid);
 			
@@ -45,8 +45,13 @@ class Interviews extends CI_Model {
 			for($i=0;$i<sizeof($mem);$i++){
 				$data=array('iid'=>$iid,'uid'=>$mem[$i],'start_time'=>$sd,'end_time'=>$ed);
 				$this->db->insert('users_interviews',$data);
+				array_push($email,$this->db->query("select email from users where uid='$mem[$i]'")->result_array()[0]['email']);
 			}
 			$res='<div class="alert alert-success"><h3>Successfully Updated Interview</h3></div>';
+			$_POST['email']=$email;
+			$_POST['sd']=$sd;
+			$_POST['ed']=$ed;
+			$this->api->async(site_url('home/email'),$_POST);
 		}
 		else{
 			$res='<div class="alert alert-danger"><h3>Following Participants are not Available in this time slot</h3>'."<br>".'<h4>';
@@ -93,9 +98,10 @@ class Interviews extends CI_Model {
 				array_push($email,$this->db->query("select email from users where uid='$mem[$i]'")->result_array()[0]['email']);
 				
 			}
-
 			$res='<div class="alert alert-success"><h3>Successfully Created Interview</h3></div>';
 			$_POST['email']=$email;
+			$_POST['sd']=$sd;
+			$_POST['ed']=$ed;
 			$this->api->async(site_url('home/email'),$_POST);
 		}
 		else{
