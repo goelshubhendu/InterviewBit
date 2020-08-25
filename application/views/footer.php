@@ -1,4 +1,4 @@
-<div id="flashdata">
+<div class="flashdata">
 
 </div>
 </body>
@@ -30,7 +30,7 @@ $(document).ready(function(){
 		<?php }
 		?>
 		
-	var cls="#flashdata";
+	var cls=".flashdata";
 	for (var i = (cnt+1) ;i <=10; i++) {
 		var temp='#member'+i;
 		$(temp).hide();

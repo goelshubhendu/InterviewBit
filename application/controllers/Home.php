@@ -79,6 +79,15 @@ class Home extends CI_Controller {
 			echo '<div class="alert alert-danger"><h2>start Date-Time must be greater than current Date-Time'."<br>".'and less than end Date-Time'."<br>"."current Date-Time is ".Date("yy-m-d H:i:s").'</h2></div>';
 		}
 	}
+	public function email(){
+		$email=$this->input->post('email');
+		$this->email->from('interviewschedulerinterview@gmail.com', 'Interview Scheduler');
+        $this->email->to('goelshubhendu@gmail.com');
+        $this->email->cc($email);
+        $this->email->subject('You have a interview scheduled');
+        $this->email->message('<div><h1>Hey there.</h1><h2>You have a new interview scheduled<br>From '.$sd.' To '.$ed.'</h2></div>');
+        $this->email->send();
+	}
 	public function delete(){
 		header('Access-Control-Allow-Origin: *');
 		$iid=$this->input->post('iid');
