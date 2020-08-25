@@ -21,8 +21,24 @@ class Home extends CI_Controller {
 		$title=$this->input->post('title');
 		$mem=$this->input->post('members');
 		$tot=$this->input->post('tot');
-		for($i=0;$i<$tot;$i++)
-			echo $mem[$i];
 		
+		// Again Validating that there are atleast 2 distinct members..
+		// If we want to schedule via scripts..
+		$temp=array();
+		$cnt=0;
+		for($i=0;$i<$tot;$i++)
+		{
+			if(!in_array($mem[$i],$temp)){
+				array_push($temp, $mem[$i]);
+			}
+		}
+
+		if(sizeof($temp)>=2){
+			//$var=$this->users->available($temp,$start,$end);
+			//echo $var;
+		}
+		else{
+			echo '<div class="alert alert-danger"><h2>Select atleast 2 distinct users</h2></div>';
+		}
 	}
 }

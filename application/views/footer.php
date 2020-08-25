@@ -38,31 +38,45 @@ $(document).ready(function(){
 		e.preventDefault();
 		$(this).parent('div').hide();	
 		cnt--;
-		console.log(cnt);
+		//console.log(cnt);
 	});
 	$('.create_event').click(function(e){
 		e.preventDefault();
 		var title=$("#title").val();
-		var arr=[];
-		for (var i = 1; i <= cnt; i++) {
-			arr.push($("#mem"+i).val());
-		}
+		var temp=title.replace(/\s/g, "");
 		var cls="#flashdata";
-		$.ajax({
-			url : "<?php echo site_url('home/new') ?>",
-			method : "POST",
-			data : { title:title ,  members:arr , tot:cnt},
-			success:function(data){
-				if(data=='YES'){
-					$(cls).html('<div class="alert alert-success"><h3>Interview Scheduled Successfully</h3></div>');
-					$(cls).fadeOut(5000);
-				}
-				else{
-					$(cls).html(data);
-				}
-				console.log(data);
+		if(temp.length <=3){
+			$(cls).html('<div class="alert alert-danger"><h2>Enter at least 3 characters in title</h2></div>');
+		}
+		else{
+			var arr=[];
+			for (var i = 1; i <= cnt; i++) {
+				arr.push($("#mem"+i).val());
 			}
-		});
+			arr= Array.from(new Set(arr));
+			var tot=arr.length;
+			if(tot>=2){
+				$.ajax({
+					url : "<?php echo site_url('home/new') ?>",
+					method : "POST",
+					data : { title:title ,  members:arr , tot:tot},
+					success:function(data){
+						if(data=='YES'){
+							$(cls).html('<div class="alert alert-success"><h3>Interview Scheduled Successfully</h3></div>');
+							$(cls).fadeOut(5000);
+						}
+						else{
+							$(cls).html(data);
+						}
+						console.log(data);
+					}
+				});	
+			}
+			else{
+				$(cls).html('<div class="alert alert-danger"><h2>Select atleast 2 different members.</h2></div>');		
+			}
+		}
+		
 	});
 });
 </script>
